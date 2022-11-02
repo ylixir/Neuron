@@ -11,4 +11,5 @@ in with pkgs;
   gnumake
   lua # just something to drop into on the command line to play
   libarchive # bsdtar allows stripping top level dir from zips
+  rsync
 ]
