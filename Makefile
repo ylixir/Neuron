@@ -44,6 +44,7 @@ light-clean:
 	rm -rf "$(NEURON_TARGET_DIR)"
 clean: light-clean
 	rm -rf .libcache
+	rm -rf "$(NEURON_INSTALL_DIR)"
 
 $(NEURON_TARGET_DIR):
 	@echo "  $@"
@@ -93,6 +94,7 @@ libs: $(NEURON_TARGET_DIR)/Libs $(NEURON_TARGET_DIR)/Libs/LibDualSpec-1.0 .libca
 	bsdtar --strip-components=1 -C "$(NEURON_TARGET_DIR)/Libs/LibDualSpec-1.0" -xzf .libcache/libdualspec.zip "*/Lib*"
 	bsdtar -C "$(NEURON_TARGET_DIR)/Libs" -xzf .libcache/libdeflate.zip
 	bsdtar --strip-components=1 -C "$(NEURON_TARGET_DIR)/Libs" -xzf .libcache/libdbicon.zip "*/LibDBIcon-1.0"
+	bsdtar --strip-components=1 -C "$(NEURON_TARGET_DIR)/Libs" -xzf .libcache/libdbicon.zip "*/LibDataBroker-1.1"
 
 $(NEURON_TARGET_DIR)/Libs:
 	@echo "  $@"
