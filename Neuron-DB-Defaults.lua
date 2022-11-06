@@ -4,26 +4,39 @@
 -- This code is licensed under the MIT license (see LICENSE for details)
 
 local _, addonTable = ...
-local Neuron = addonTable.Neuron
+
+local Array = addonTable.utilities.Array
+local Table = addonTable.utilities.Table
 
 ---**NOTE** values assigned with empty quotes, i.e. name = "", basically don't exist. Lua treats them as nil
 
-local genericButtonData = {
-	btnType = "macro",
+local function genericSpecData()
+  return {
+		['**'] = {
+			actionID = false,
+
+			macro_Text = "",
+			macro_Icon = false,
+			macro_Name = "",
+			macro_Note = "",
+			macro_UseNote = false,
+			macro_BlizzMacro = false,
+			macro_EquipmentSet = false,
+		},
+		homestate = {}
+	}
+end
+
+local genericKeyData = {
+	keys = {
+		hotKeyLock = false,
+		hotKeyPri = false,
+		hotKeyText = ":",
+		hotKeys = ":"
+	}
 }
 
 
-local genericSpecData = {
-	actionID = false,
-
-	macro_Text = "",
-	macro_Icon = false,
-	macro_Name = "",
-    macro_Note = "",
-	macro_UseNote = false,
-    macro_BlizzMacro = false,
-	macro_EquipmentSet = false,
-}
 --- Button fields
 -- indexes refer to a table of pairs which include a function to
 -- generate the button data
@@ -33,130 +46,129 @@ local genericSpecData = {
 --@field mIndex mouse over text index. hides other text
 --@field tIndex tooltip index
 
-local genericXPBtnData= {
-	curXPType = "player_xp",
+local genericXPBtnData= Table.spread(genericKeyData){
+	config = {
+		curXPType = "player_xp",
 
-	width = 450,
-	height = 18,
-	texture = 7,
-	border = 1,
+		width = 450,
+		height = 18,
+		texture = 7,
+		border = 1,
 
-	orientation = 1,
+		orientation = 1,
 
-	cIndex = 2,
-	cColor = {1,1,1},
+		cIndex = 2,
+		cColor = {1,1,1},
 
-	lIndex = 6,
-	lColor = {1,1,1},
+		lIndex = 6,
+		lColor = {1,1,1},
 
-	rIndex = 4,
-	rColor = {1,1,1},
+		rIndex = 4,
+		rColor = {1,1,1},
 
-	mIndex = 3,
-	mColor = {1,1,1},
+		mIndex = 3,
+		mColor = {1,1,1},
 
-	tIndex = 1,
-	tColor = {1,1,1},
+		tIndex = 1,
+		tColor = {1,1,1},
 
-	bordercolor = {1,1,1},
-
+		bordercolor = {1,1,1},
+	}
 }
 
-local genericRepBtnData= {
-	repID = 2,
-	autoWatch = 2,
+local genericRepBtnData= Table.spread(genericKeyData){
+	config = {
+		repID = 2,
+		autoWatch = 2,
 
-	width = 450,
-	height = 18,
-	texture = 7,
-	border = 1,
+		width = 450,
+		height = 18,
+		texture = 7,
+		border = 1,
 
-	orientation = 1,
+		orientation = 1,
 
-	cIndex = 3,
-	cColor = {1,1,1},
+		cIndex = 3,
+		cColor = {1,1,1},
 
-	lIndex = 2,
-	lColor = {1,1,1},
+		lIndex = 2,
+		lColor = {1,1,1},
 
-	rIndex = 4,
-	rColor = {1,1,1},
+		rIndex = 4,
+		rColor = {1,1,1},
 
-	mIndex = 6,
-	mColor = {1,1,1},
+		mIndex = 6,
+		mColor = {1,1,1},
 
-	tIndex = 1,
-	tColor = {1,1,1},
+		tIndex = 1,
+		tColor = {1,1,1},
 
-	bordercolor = {1,1,1},
+		bordercolor = {1,1,1},
+	}
 }
 
-local genericCastBtnData= {
-	width = 250,
-	height = 18,
-	texture = 7,
-	border = 1,
+local genericCastBtnData= Table.spread(genericKeyData){
+	config = {
+		width = 250,
+		height = 18,
+		texture = 7,
+		border = 1,
 
-	orientation = 1,
+		orientation = 1,
 
-	cIndex = 1,
-	cColor = {1,1,1},
+		cIndex = 1,
+		cColor = {1,1,1},
 
-	lIndex = 2,
-	lColor = {1,1,1},
+		lIndex = 2,
+		lColor = {1,1,1},
 
-	rIndex = 3,
-	rColor = {1,1,1},
+		rIndex = 3,
+		rColor = {1,1,1},
 
-	mIndex = 1,
-	mColor = {1,1,1},
+		mIndex = 1,
+		mColor = {1,1,1},
 
-	tIndex = 1,
-	tColor = {1,1,1},
+		tIndex = 1,
+		tColor = {1,1,1},
 
-	bordercolor = {1,1,1},
+		bordercolor = {1,1,1},
 
-	castColor = {1,0.7,0},
-	channelColor = {0,1,0},
-	successColor = {0,1,0},
-	failColor = {1,0,0},
+		castColor = {1,0.7,0},
+		channelColor = {0,1,0},
+		successColor = {0,1,0},
+		failColor = {1,0,0},
 
-	unit = "player",
-	showIcon = true,
+		unit = "player",
+		showIcon = true,
+	}
 }
 
-local genericMirrorBtnData= {
-	width = 250,
-	height = 18,
-	texture = 7,
-	border = 1,
+local genericMirrorBtnData= Table.spread(genericKeyData){
+	config = {
+		width = 250,
+		height = 18,
+		texture = 7,
+		border = 1,
 
-	orientation = 1,
+		orientation = 1,
 
-	cIndex = 1,
-	cColor = {1,1,1},
+		cIndex = 1,
+		cColor = {1,1,1},
 
-	lIndex = 2,
-	lColor = {1,1,1},
+		lIndex = 2,
+		lColor = {1,1,1},
 
-	rIndex = 3,
-	rColor = {1,1,1},
+		rIndex = 3,
+		rColor = {1,1,1},
 
-	mIndex = 1,
-	mColor = {1,1,1},
+		mIndex = 1,
+		mColor = {1,1,1},
 
-	tIndex = 1,
-	tColor = {1,1,1},
+		tIndex = 1,
+		tColor = {1,1,1},
 
-	bordercolor = {1,1,1},
-}
-
-
-local genericKeyData = {
-	hotKeyLock = false,
-	hotKeyPri = false,
-	hotKeyText = ":",
-	hotKeys = ":"
+		bordercolor = {1,1,1},
+	}
 }
 
 
@@ -164,10 +176,9 @@ local genericBarData = {
 	name = ":",
 
 	buttons = {
-		['*'] = {
-			['config'] = CopyTable(genericButtonData),
-			['keys'] = CopyTable(genericKeyData),
-			['data'] = {},
+		['*'] = Table.spread(genericKeyData){
+			config = { btnType = "macro" },
+			data = {},
 		}
 	},
 
@@ -284,91 +295,75 @@ addonTable.databaseDefaults = {
 		NeuronIcon = {hide = false,},
 
 		ActionBar = {
-			['*'] = CopyTable(genericBarData)
+			['*'] = Table.spread(genericBarData) {
+				buttons = {
+					['*'] = Table.spread(
+						{ config = { btnType = "macro" }, },
+						genericKeyData,
+
+						--any time a player is without spec, it is now treated as spec 5
+						--so we need 5 specs or we will error out on new character creation
+						Array.initialize(5,genericSpecData)
+					)
+				}
+			}
 		},
 
 		ExtraBar = {
-			['*'] = CopyTable(genericBarData),
+			['*'] = Table.spread(genericBarData){}
 		},
 
 		ExitBar ={
-			['*'] = CopyTable(genericBarData)
+			['*'] = Table.spread(genericBarData){}
 		},
 
 		BagBar = {
-			['*'] = CopyTable(genericBarData)
+			['*'] = Table.spread(genericBarData){}
 		},
 
 		ZoneAbilityBar = {
-			['*'] = CopyTable(genericBarData)
+			['*'] = Table.spread(genericBarData){}
 		},
 
 		MenuBar = {
-			['*'] = CopyTable(genericBarData)
+			['*'] = Table.spread(genericBarData){}
 		},
 
 		PetBar = {
-			['*'] = CopyTable(genericBarData)
+			['*'] = Table.spread(genericBarData){}
 		},
 
 		XPBar = {
-			['*'] = CopyTable(genericBarData)
+			['*'] = Table.spread(genericBarData){
+				buttons ={
+					['*'] = Table.spread(genericXPBtnData){},
+				}
+			}
 		},
 
 		RepBar = {
-			['*'] = CopyTable(genericBarData)
+			['*'] = Table.spread(genericBarData){
+				buttons ={
+					['*'] = Table.spread(genericRepBtnData){},
+				}
+			}
 		},
 
 		CastBar = {
-			['*'] = CopyTable(genericBarData)
+			['*'] = Table.spread(genericBarData){
+				buttons ={
+					['*'] = Table.spread(genericCastBtnData){},
+				}
+			}
 		},
 
+		-- breath/fatigue, etc
 		MirrorBar = {
-			['*'] = CopyTable(genericBarData)
+			['*'] = Table.spread(genericBarData){
+				buttons ={
+					['*'] = Table.spread(genericMirrorBtnData){},
+				}
+			}
 		},
-	}
-}
-
-------------------------------------------------------------------------------
-
-
-addonTable.databaseDefaults.profile.ActionBar['*'].buttons = {
-	['*'] = {
-		['config'] = CopyTable(genericButtonData),
-		['keys'] = CopyTable(genericKeyData),
-		[1] = {['**'] = CopyTable(genericSpecData), ['homestate'] = {}},
-		[2] = {['**'] = CopyTable(genericSpecData), ['homestate'] = {}},
-		[3] = {['**'] = CopyTable(genericSpecData), ['homestate'] = {}},
-		[4] = {['**'] = CopyTable(genericSpecData), ['homestate'] = {}},
-		--any time a player is without spec, it is not treated as spec 5
-		[5] = {['**'] = CopyTable(genericSpecData), ['homestate'] = {}}, --we need this or we will error out on new character creation
-	}
-}
-
-addonTable.databaseDefaults.profile.RepBar['*'].buttons ={
-	['*'] = {
-		['config'] = CopyTable(genericRepBtnData),
-		['keys'] = CopyTable(genericKeyData),
-	}
-}
-
-addonTable.databaseDefaults.profile.XPBar['*'].buttons ={
-	['*'] = {
-		['config'] = CopyTable(genericXPBtnData),
-		['keys'] = CopyTable(genericKeyData),
-	}
-}
-
-addonTable.databaseDefaults.profile.CastBar['*'].buttons ={
-	['*'] = {
-		['config'] = CopyTable(genericCastBtnData),
-		['keys'] = CopyTable(genericKeyData),
-	}
-}
-
-addonTable.databaseDefaults.profile.MirrorBar['*'].buttons ={
-	['*'] = {
-		['config'] = CopyTable(genericMirrorBtnData),
-		['keys'] = CopyTable(genericKeyData),
 	}
 }
