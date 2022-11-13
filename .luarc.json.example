@@ -1,0 +1,10 @@
+{
+  "workspace": {
+    "library": [
+      "../IntelliJ-IDEA-Lua-IDE-WoW-API/"
+    ]
+  },
+  "runtime": {
+    "version": "Lua 5.1"
+  }
+}
