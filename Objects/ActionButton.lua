@@ -845,9 +845,9 @@ function ActionButton:UpdateIcon()
 	-- the database values. but we need to keep GetAppearance stateless
 	-- so that we can use it in other contexts: like the settings dialog
 	local data = (
-		self.DB
-		and self.DB[spec][state]
-		or {actionID = self.actionID, macro_Text = self:GetMacroText(), macro_Icon = self:GetMacroIcon()}
+		self.actionID
+		and {actionID = self.actionID, macro_Text = self:GetMacroText(), macro_Icon = self:GetMacroIcon()}
+		or self.DB[spec][state]
 	)
 
 	self:ApplyAppearance(self:GetAppearance(data))
